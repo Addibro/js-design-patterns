@@ -1,4 +1,5 @@
 # Design patterns
+This will go through some good design patterns for javascript
 
 ## Creational patterns
 ##### Prototype
