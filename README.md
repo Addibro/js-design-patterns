@@ -1,7 +1,7 @@
 # Design patterns
 This will go through some good design patterns for javascript
 
-##### Let's go through prototypes first..
+#### Let's go through prototypes first..
 
 A prototype is an encapsulation of properties that an object links to.
 So for every copy of the object it all links back to the same prototype. 
@@ -20,7 +20,7 @@ Task.prototype.complete = function () {
 ```
 Now every Task object will have a 'complete' function
 
-##### What we will be woring with
+#### What we will be woring with
 We have an object/class, called Task, which has a name and has the functions complete and save:
 
 ```
