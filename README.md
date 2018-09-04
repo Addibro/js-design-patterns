@@ -1,8 +1,6 @@
 # Design patterns
 This will go through some good design patterns for javascript
 
-## Creational patterns
-
 ##### Let's go through prototypes first..
 
 A prototype is an encapsulation of properties that an object links to.
@@ -21,6 +19,28 @@ Task.prototype.complete = function () {
 }
 ```
 Now every Task object will have a 'complete' function
+
+##### What we will be woring with
+We have an object/class, called Task, which has a name and has the functions complete and save:
+
+```
+class Task {
+    constructor(name) {
+        this.name = name;
+        this.completed = false;
+    }
+    complete() {
+        this.completed = true;
+    }
+    save() {
+        console.log('saveing task');
+    }
+}
+```
+
+## Creational patterns
+- How to construct new objects
+- Adapting creation to the situation
 
 #### Constructor pattern
 Use to create new objets with their own object scope. 
@@ -61,8 +81,8 @@ class Task {
 ```
 
 #### Module pattern
-Simple way to encapsulate a group of similar methods
-Creates a "Toolbox" of functions to use
+- Simple way to encapsulate a group of similar methods
+- Creates a "Toolbox" of functions to use
 
 Example of a module pattern:
 ```
@@ -127,9 +147,67 @@ Concerned with how object are made up and simplify relationships between objects
 - Simplify functionaliy
 
 #### Decorator pattern
-used to add new functionality to an existing object, without being obtrusive. 
+Used to add new functionality to an existing object, without being obtrusive. 
 - More complete inheritance
 - Wraps an object 
 - Protects existing objects
 - Allows extended functionality without changing the original class
+
+Example when we want to add functionality to Task. Create an UrgentTask
+```
+var UrgentTask = function(name, priority) {
+    // use Task's constructor
+    Task.call(this, name); // this is the same as 'super' in Java or .NET
+    this.priority = priority;
+}
+
+// Set UrgentTask's prototype to Task's prototype
+UrgentTask.prototype = Object.create(Task.prototype);
+
+// Add decorator pattern to UrgentTask by adding a notifying functionality
+UrgentTask.prototype.notify = function() {
+    //.. notify
+}
+
+// Decorate the save function
+UrgentTask.prototype.save = function() {
+    // notify...
+    this.notify();
+    //.. do some stuf before saving
+    // call the original Task's save method
+    Task.prototype.save.call(this);
+}
+
+```
+
+#### Facade pattern
+used to provide a simplified interface to a complicated system. 
+- This about the fron of a building (nice on the outside, inside maybe not)
+- Hides chaos from us
+- Simplifies the interface
+- JQuery (sits on top of the DOM)
+
+Example if you have an ugly and messy (module pattern) API which you want to simplify:
+```
+var TaskService = function() {
+    return {
+        // .. lots of messy functions like complete, completeDate, notify ect
+    }
+}
+
+// make it simplified
+var TaskServiceWrapper = function() {
+    // make it more automatic/simpler
+    var completeAndNotify = function(task) {
+        TaskService.complete();
+        TaskService.notify();
+        // ...
+    }
+
+    return {completeAndNotify: completeAndNotify}
+}(); // execute the function so it becomes the return statement (an object with the completeAndNotify method)
+
+TaskServiceWrapper.completeAndNotify(task);
+
+```
 
