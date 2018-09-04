@@ -2,8 +2,8 @@
 This will go through some good design patterns for javascript
 
 ## Creational patterns
-##### Prototype
-Let's go through prototypes..
+
+##### Let's go through prototypes first..
 
 A prototype is an encapsulation of properties that an object links to.
 So for every copy of the object it all links back to the same prototype. 
